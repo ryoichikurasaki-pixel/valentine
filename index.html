@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>For Aadhya ❤️</title>
+
 <style>
 body {
   margin: 0;
@@ -12,6 +13,7 @@ body {
   font-family: 'Segoe UI', sans-serif;
   color: white;
   text-align: center;
+  user-select: none;
 }
 
 .heart {
@@ -33,7 +35,8 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
-  transition: opacity 2s ease;
+  transition: opacity 1.5s ease;
+  max-width: 85%;
 }
 
 .scene.active {
@@ -41,82 +44,125 @@ body {
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 2.8rem;
   text-shadow: 0 0 25px #ff4f9a;
 }
 
 p {
   font-size: 1.4rem;
-  margin-top: 15px;
-  line-height: 1.6;
+  line-height: 1.7;
   color: #ffd6e8;
+  min-height: 80px;
+}
+
+.tap {
+  margin-top: 25px;
+  font-size: 1rem;
+  opacity: 0.7;
 }
 
 #final {
-  font-size: 4rem;
+  font-size: 3.8rem;
   color: #ff2f92;
-  text-shadow: 0 0 40px #ff5fa2;
-  animation: pulse 2s infinite alternate;
+  animation: heartbeat 1.5s infinite;
 }
 
-@keyframes pulse {
-  from { transform: scale(1); }
-  to { transform: scale(1.08); }
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  40% { transform: scale(1); }
+  60% { transform: scale(1.12); }
+  100% { transform: scale(1); }
 }
 </style>
 </head>
-<body>
+
+<body onclick="nextScene()">
 
 <!-- MUSIC -->
 <audio autoplay loop>
-  <source src="https://cdn.pixabay.com/audio/2022/10/03/audio_946b8b8e40.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/audio/2022/10/03/audio_946b8b8e40.mp3">
 </audio>
 
 <!-- SCENES -->
-<div class="scene active" id="scene1">
-  <h1>Happy Valentine’s Day ❤️</h1>
-  <p>
-    To the girl who makes my world softer,<br>
-    brighter, and more beautiful 🌙
-  </p>
+<div class="scene active">
+  <h1>Hey Aadhya ❤️</h1>
+  <p data-text="This is something I made just for you. Take your time… there’s no rush here."></p>
+  <div class="tap">tap anywhere to continue</div>
 </div>
 
-<div class="scene" id="scene2">
-  <h1>Aadhya Shewaramani 💕</h1>
-  <p>
-    Every smile of yours feels like poetry,<br>
-    every moment with you feels like magic ✨
-  </p>
+<div class="scene">
+  <h1>Aadhya Shewaramani ✨</h1>
+  <p data-text="You walked into my life without trying… and somehow became the most beautiful part of it."></p>
+  <div class="tap">tap to continue</div>
 </div>
 
-<div class="scene" id="scene3">
+<div class="scene">
+  <h1>Being With You 🌙</h1>
+  <p data-text="Feels calm. Feels safe. Feels like home. Like everything finally makes sense."></p>
+  <div class="tap">tap to continue</div>
+</div>
+
+<div class="scene">
+  <h1>A Little Memory 📅</h1>
+  <p data-text="The day I realized I was falling for you… is a day I’ll never forget."></p>
+  <div class="tap">tap to continue</div>
+</div>
+
+<div class="scene">
+  <h1>From My Heart 🎙️</h1>
+  <p data-text="If this were a voice note, I’d tell you softly how proud I am of you… how special you are… and how much you mean to me."></p>
+  <div class="tap">tap to continue</div>
+</div>
+
+<div class="scene">
   <h1>From Suhan 💌</h1>
-  <p>
-    I never believed in destiny until you walked in.<br>
-    You are my calm, my chaos, my forever 🤍
-  </p>
+  <p data-text="I don’t promise perfection. I promise honesty, effort, and a heart that chooses you — every single day."></p>
+  <div class="tap">tap to continue</div>
 </div>
 
-<div class="scene" id="scene4">
+<div class="scene">
   <h1 id="final">I LOVE YOU AADHYA ❤️</h1>
-  <p>
-    — Suhan Chakravarti
-  </p>
+  <p data-text="— Suhan Chakravarti"></p>
 </div>
 
 <script>
 const scenes = document.querySelectorAll('.scene');
 let index = 0;
+let typing = false;
 
-setInterval(() => {
-  scenes[index].classList.remove('active');
-  index++;
-  if (index < scenes.length) {
-    scenes[index].classList.add('active');
+function typeText(element, text, i = 0) {
+  typing = true;
+  if (i < text.length) {
+    element.innerHTML += text.charAt(i);
+    setTimeout(() => typeText(element, text, i + 1), 40);
+  } else {
+    typing = false;
   }
-}, 5000);
+}
 
-// Floating hearts
+function showScene(i) {
+  scenes.forEach(s => s.classList.remove('active'));
+  const scene = scenes[i];
+  scene.classList.add('active');
+  const p = scene.querySelector('p');
+  if (p && p.dataset.text) {
+    p.innerHTML = "";
+    typeText(p, p.dataset.text);
+  }
+}
+
+function nextScene() {
+  if (typing) return;
+  if (index < scenes.length - 1) {
+    index++;
+    showScene(index);
+  }
+}
+
+showScene(0);
+
+// hearts
 function createHeart() {
   const heart = document.createElement("div");
   heart.className = "heart";
@@ -126,7 +172,7 @@ function createHeart() {
   document.body.appendChild(heart);
   setTimeout(() => heart.remove(), 8000);
 }
-setInterval(createHeart, 250);
+setInterval(createHeart, 300);
 </script>
 
 </body>
