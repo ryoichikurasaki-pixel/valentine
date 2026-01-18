@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Aadhya ❤️</title>
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(180deg, #120014, #2a001f, #120014);
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  text-align: center;
+}
+
+.heart {
+  position: absolute;
+  color: #ff9acb;
+  font-size: 22px;
+  animation: floatUp 8s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(100vh) scale(0.5); opacity: 1; }
+  to { transform: translateY(-10vh) scale(1.4); opacity: 0; }
+}
+
+.scene {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+.scene.active {
+  opacity: 1;
+}
+
+h1 {
+  font-size: 3rem;
+  text-shadow: 0 0 25px #ff4f9a;
+}
+
+p {
+  font-size: 1.4rem;
+  margin-top: 15px;
+  line-height: 1.6;
+  color: #ffd6e8;
+}
+
+#final {
+  font-size: 4rem;
+  color: #ff2f92;
+  text-shadow: 0 0 40px #ff5fa2;
+  animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+</style>
+</head>
+<body>
+
+<!-- MUSIC -->
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/audio/2022/10/03/audio_946b8b8e40.mp3" type="audio/mpeg">
+</audio>
+
+<!-- SCENES -->
+<div class="scene active" id="scene1">
+  <h1>Happy Valentine’s Day ❤️</h1>
+  <p>
+    To the girl who makes my world softer,<br>
+    brighter, and more beautiful 🌙
+  </p>
+</div>
+
+<div class="scene" id="scene2">
+  <h1>Aadhya Shewaramani 💕</h1>
+  <p>
+    Every smile of yours feels like poetry,<br>
+    every moment with you feels like magic ✨
+  </p>
+</div>
+
+<div class="scene" id="scene3">
+  <h1>From Suhan 💌</h1>
+  <p>
+    I never believed in destiny until you walked in.<br>
+    You are my calm, my chaos, my forever 🤍
+  </p>
+</div>
+
+<div class="scene" id="scene4">
+  <h1 id="final">I LOVE YOU AADHYA ❤️</h1>
+  <p>
+    — Suhan Chakravarti
+  </p>
+</div>
+
+<script>
+const scenes = document.querySelectorAll('.scene');
+let index = 0;
+
+setInterval(() => {
+  scenes[index].classList.remove('active');
+  index++;
+  if (index < scenes.length) {
+    scenes[index].classList.add('active');
+  }
+}, 5000);
+
+// Floating hearts
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (Math.random() * 3 + 5) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 8000);
+}
+setInterval(createHeart, 250);
+</script>
+
+</body>
+</html>
